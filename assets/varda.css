@@ -1,0 +1,37 @@
+/* VÄRDA brand + official product imagery */
+.logo{display:inline-flex!important;align-items:center!important;text-decoration:none!important;line-height:1!important}
+.logo-mark,.logo-text{display:none!important}
+.logo::after{content:"VÄRDA";font-family:"Instrument Serif",serif;font-size:34px;font-weight:400;letter-spacing:.055em;color:var(--ink);line-height:.9}
+
+.mini-visual.tone-boj,.card-visual.tone-boj,.product-bottle.tone-boj{
+  background-color:#fff2ee!important;
+  background-image:url("https://jp.beautyofjoseon.com/cdn/shop/files/Untitled_design_-_2025-06-17T142033.318.png?v=1750140933&width=1800")!important;
+  background-repeat:no-repeat!important;background-position:center!important;background-size:contain!important
+}
+.mini-visual.tone-tinted,.card-visual.tone-tinted,.product-bottle.tone-tinted{
+  background-color:#f6ece9!important;
+  background-image:url("https://cdn.shopify.com/s/files/1/0558/4135/7989/files/241127_JOSEON_2001_1_b1470a4d-1b6e-4b79-9ce5-457454cb29a9.jpg?v=1738546620")!important;
+  background-repeat:no-repeat!important;background-position:center!important;background-size:cover!important
+}
+.mini-visual.tone-round,.card-visual.tone-round,.product-bottle.tone-round{
+  background-color:#dff4fb!important;
+  background-image:url("https://roundlab.com/cdn/shop/files/BIRCH_JUICE_MOISTURIZING_UVLOCK3_Large_10126e46-dfcc-4cd5-970c-146d4be65989.webp?v=1772852134&width=360")!important;
+  background-repeat:no-repeat!important;background-position:center!important;background-size:cover!important
+}
+.mini-visual.tone-skin1004,.card-visual.tone-skin1004,.product-bottle.tone-skin1004{
+  background-color:#f4efe6!important;
+  background-image:url("https://www.skin1004.com/cdn/shop/files/skin1004-hyalu-cica-water-fit-sun-serum-uv-1253199403_1440x.jpg?v=1786012930")!important;
+  background-repeat:no-repeat!important;background-position:center!important;background-size:cover!important
+}
+.mini-visual.tone-purito,.card-visual.tone-purito,.product-bottle.tone-purito{
+  background-color:#f7f1e7!important;
+  background-image:url("https://purito.com/wp-content/uploads/2024/04/Daily-Soft-Touch-Sunscreen_pc.jpg")!important;
+  background-repeat:no-repeat!important;background-position:center top!important;background-size:cover!important
+}
+
+.mini-visual[class*="tone-"]::before,.mini-visual[class*="tone-"]::after,
+.card-visual[class*="tone-"]::before,.card-visual[class*="tone-"]::after,
+.product-bottle[class*="tone-"]::before,.product-bottle[class*="tone-"]::after{display:none!important}
+.card-product-tag,.product-label{background:rgba(255,255,255,.92)!important;backdrop-filter:blur(8px)}
+.product-bottle.tone-purito{background-size:auto 100%!important}
+@media(max-width:760px){.logo::after{font-size:30px}}
