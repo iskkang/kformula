@@ -1,0 +1,12 @@
+{
+  "name": "varda-reality-check",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node --check assets/app.js && node --check api/scan.js && node --check api/health.js"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0"
+  }
+}
