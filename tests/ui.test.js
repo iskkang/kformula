@@ -10,6 +10,7 @@ const root = path.join(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const app = fs.readFileSync(path.join(root, 'assets/app.js'), 'utf8');
 const vardaCss = fs.readFileSync(path.join(root, 'assets/varda.css'), 'utf8');
+const vercelConfig = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'));
 
 const productImages = [
   ['tone-anua', 'anua-heartleaf-77.webp'],
@@ -50,6 +51,7 @@ test('every seeded product card has a local image rule and asset', () => {
 test('Google Search Console verification file is published at the site root', () => {
   const verification = fs.readFileSync(path.join(root, 'googlee9c6c5390d444c3c.html'), 'utf8').trim();
   assert.equal(verification, 'google-site-verification: googlee9c6c5390d444c3c.html');
+  assert.equal(vercelConfig.cleanUrls, false, 'the exact .html verification URL must not redirect');
 });
 
 const quickScanPayload = {
