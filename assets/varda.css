@@ -1,4 +1,4 @@
-/* VÄRDA brand + official product imagery */
+/* VÄRDA brand + actual product imagery */
 .logo{display:inline-flex!important;align-items:center!important;text-decoration:none!important;line-height:1!important}
 .logo-mark,.logo-text{display:none!important}
 .logo::after{content:"VÄRDA";font-family:"Instrument Serif",serif;font-size:34px;font-weight:400;letter-spacing:.055em;color:var(--ink);line-height:.9}
@@ -25,13 +25,12 @@
 }
 .mini-visual.tone-purito,.card-visual.tone-purito,.product-bottle.tone-purito{
   background-color:#f7f1e7!important;
-  background-image:url("https://purito.com/wp-content/uploads/2024/04/Daily-Soft-Touch-Sunscreen_pc.jpg")!important;
-  background-repeat:no-repeat!important;background-position:center top!important;background-size:cover!important
+  background-image:url("https://d1flfk77wl2xk4.cloudfront.net/Assets/purito-seoul-daily-soft-touch-sunscreen-60ml/74/326/XXL_p0207332674.png")!important;
+  background-repeat:no-repeat!important;background-position:center!important;background-size:contain!important
 }
 
 .mini-visual[class*="tone-"]::before,.mini-visual[class*="tone-"]::after,
 .card-visual[class*="tone-"]::before,.card-visual[class*="tone-"]::after,
 .product-bottle[class*="tone-"]::before,.product-bottle[class*="tone-"]::after{display:none!important}
 .card-product-tag,.product-label{background:rgba(255,255,255,.92)!important;backdrop-filter:blur(8px)}
-.product-bottle.tone-purito{background-size:auto 100%!important}
 @media(max-width:760px){.logo::after{font-size:30px}}
