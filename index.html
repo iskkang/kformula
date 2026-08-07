@@ -38,13 +38,25 @@
         <div class="hero-copy">
           <div class="eyebrow">THE K-BEAUTY REALITY CHECK</div>
           <h1>Popular abroad.<br><em>But is it big in Korea?</em></h1>
-          <p>Search a K-beauty product before you buy. VÄRDA separates domestic popularity, global hype, recurring review patterns, and formula changes — with the evidence type shown on every claim.</p>
+          <p>Search any K-beauty product before you buy. Verified reports open instantly; products we have not seen before trigger a live, source-linked Quick Scan.</p>
 
           <div class="search-panel">
             <label class="search-label" for="q">Search by product or brand</label>
             <div class="search">
               <input id="q" type="search" placeholder="Try ANUA Heartleaf 77 or Relief Sun" autocomplete="off" aria-label="Search K-beauty product" />
               <button id="go" type="button">Run reality check</button>
+            </div>
+            <div class="search-options">
+              <label for="scanMarket">Shopping in</label>
+              <select id="scanMarket" aria-label="Select shopper market">
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="European Union">European Union</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="Other">Other</option>
+              </select>
+              <span>New scans may take up to a minute.</span>
             </div>
             <div id="results" class="results" aria-live="polite"></div>
           </div>
@@ -86,13 +98,17 @@
       <div><strong>Uncertainty stays visible</strong><span>Missing evidence is labeled, not filled with guesses.</span></div>
     </section>
 
+    <section class="quick-scan-section" id="quickScanSection" hidden aria-live="polite">
+      <div class="quick-scan-shell" id="quickScanContent"></div>
+    </section>
+
     <section class="section checks-section" id="checks">
       <div class="section-head">
         <div>
-          <div class="eyebrow">PILOT DATABASE</div>
-          <h2>Start with high-confusion products.</h2>
+          <div class="eyebrow">VERIFIED REPORTS</div>
+          <h2>Deep checks for high-confusion products.</h2>
         </div>
-        <p>The first checks prioritize products with global hype, regional sunscreen differences, or reformulation confusion. This is a deliberately small validation database.</p>
+        <p>These reports receive deeper source review and can be indexed by search engines. Every other product can still be researched through a provisional live Quick Scan.</p>
       </div>
       <div class="filter-row" role="group" aria-label="Filter reality checks">
         <button class="filter active" type="button" data-filter="all">All checks</button>
@@ -133,9 +149,9 @@
     <section class="section request-section" id="request">
       <div class="request-shell">
         <div>
-          <div class="eyebrow">BUILD THE DATABASE WITH DEMAND</div>
-          <h2>Can't find your product?</h2>
-          <p>Submit the exact product name. No account and no conversation required. Requests are used only to decide which public reality check we research next.</p>
+          <div class="eyebrow">PROMOTE A QUICK SCAN</div>
+          <h2>Want a verified report?</h2>
+          <p>Live scans cover new products immediately. Submit the exact product here if you want it prioritized for a deeper, indexable Reality Check.</p>
         </div>
         <form id="requestForm" class="request-form">
           <label for="requestProduct">Product or product URL</label>

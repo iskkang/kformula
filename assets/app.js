@@ -147,7 +147,20 @@ document.querySelectorAll('.filter').forEach(button => {
   });
 });
 
-function runSearch() {
+function findProducts(query) {
+  return products.filter(product => `${product.name} ${product.brand} ${product.category}`.toLowerCase().includes(query));
+}
+
+function verifiedResults(hits) {
+  return hits.map(product => `
+    <a class="result-link" href="${product.url}" data-search-result="${product.id}">
+      <span class="result-thumb ${product.tone}"></span>
+      <span><strong>${safe(product.name)}</strong><small>VERIFIED REPORT · ${safe(product.gap)} · ${safe(product.focus)}</small></span>
+      <b>→</b>
+    </a>`).join('');
+}
+
+function showSearchPreview() {
   const input = document.getElementById('q');
   const output = document.getElementById('results');
   if (!input || !output) return;
@@ -157,42 +170,184 @@ function runSearch() {
     output.classList.remove('open');
     return;
   }
-  const hits = products.filter(product => `${product.name} ${product.brand} ${product.category}`.toLowerCase().includes(query));
+  const hits = findProducts(query);
   output.classList.add('open');
   output.innerHTML = hits.length
-    ? hits.map(product => `
-      <a class="result-link" href="${product.url}" data-search-result="${product.id}">
-        <span class="result-thumb ${product.tone}"></span>
-        <span><strong>${safe(product.name)}</strong><small>${safe(product.gap)} · ${safe(product.focus)}</small></span>
-        <b>→</b>
-      </a>`).join('')
-    : `<div class="no-result"><strong>Not in the pilot database yet.</strong><span>Submit it as a research request. No account or conversation needed.</span><button id="requestMissing" type="button">Request this product</button></div>`;
+    ? verifiedResults(hits)
+    : `<div class="no-result"><strong>No verified report yet.</strong><span>VÄRDA can research this product now and cache the result for future visitors.</span><button id="runMissingScan" type="button">Run live Quick Scan</button></div>`;
   output.querySelectorAll('[data-search-result]').forEach(link => link.addEventListener('click', () => track('Open Search Result', { product: link.dataset.searchResult })));
-  document.getElementById('requestMissing')?.addEventListener('click', () => {
-    const requestInput = document.getElementById('requestProduct');
-    if (requestInput) requestInput.value = input.value.trim();
-    document.getElementById('request')?.scrollIntoView({ behavior: 'smooth' });
-    track('Search Miss', { query: input.value.trim().slice(0, 100) });
-  });
+  document.getElementById('runMissingScan')?.addEventListener('click', () => startLiveScan(input.value.trim()));
 }
 
-document.getElementById('go')?.addEventListener('click', runSearch);
-document.getElementById('q')?.addEventListener('input', runSearch);
+const scanSection = document.getElementById('quickScanSection');
+const scanContent = document.getElementById('quickScanContent');
+let activeScanController;
+
+function titleCase(value) {
+  return String(value || '').replaceAll('_', ' ').replace(/\b\w/g, char => char.toUpperCase());
+}
+
+function evidenceClass(value) {
+  if (value === 'VERIFIED FACT') return 'fact';
+  if (value === 'COMMUNITY SIGNAL') return 'community';
+  return 'estimate';
+}
+
+function listTemplate(items, emptyText) {
+  return items?.length ? `<ul>${items.map(item => `<li>${safe(item)}</li>`).join('')}</ul>` : `<p>${safe(emptyText)}</p>`;
+}
+
+function loadingTemplate(query) {
+  return `
+    <div class="scan-loading">
+      <div class="scan-spinner" aria-hidden="true"></div>
+      <div>
+        <span class="evidence-label estimate">LIVE SOURCE SEARCH</span>
+        <h2>Researching ${safe(query)}</h2>
+        <p id="scanProgress">Matching the exact product and regional version…</p>
+        <small>This provisional scan searches Korean and global evidence. It will say “not enough data” instead of inventing an answer.</small>
+      </div>
+    </div>`;
+}
+
+function renderQuickScan(payload, query) {
+  if (!scanContent || !scanSection) return;
+  const result = payload.result || {};
+  const product = result.product || {};
+  const korea = result.korea_popularity || {};
+  const global = result.global_hype || {};
+  const gap = result.gap || {};
+  const formula = result.formula_history || {};
+  const regional = result.regional_version || {};
+  const take = result.varda_take || {};
+  const productName = product.name || query;
+  const sourceList = result.sources?.length ? result.sources.map(source => `
+    <a href="${safe(source.url)}" target="_blank" rel="nofollow noopener">
+      <span class="source-domain">${safe(source.domain)}</span>
+      <strong>${safe(source.title)}</strong>
+      <small>${safe(source.evidence_type)} · ${safe(source.market)}</small>
+    </a>`).join('') : '<p>No inspectable source URLs were returned. Treat this scan as low confidence.</p>';
+  scanContent.innerHTML = `
+    <header class="scan-head">
+      <div>
+        <span class="scan-status">PROVISIONAL · AI-ASSISTED · ${safe((result.confidence || 'low').toUpperCase())} CONFIDENCE</span>
+        <span class="scan-cache">${payload.cached ? 'CACHED RESULT' : 'NEW LIVE SCAN'}</span>
+      </div>
+      <button type="button" id="closeQuickScan" aria-label="Close Quick Scan">×</button>
+    </header>
+    <div class="scan-title">
+      <span>${safe(product.brand || 'PRODUCT MATCH')} · ${safe(product.category || 'K-BEAUTY')}</span>
+      <h2>${safe(productName)}</h2>
+      <p>${safe(result.summary || product.exact_match_note || 'Evidence remains limited for this product.')}</p>
+    </div>
+    <div class="scan-signals">
+      <article><span class="source-type ${evidenceClass(korea.evidence_type)}">${safe(korea.evidence_type || 'AI-ASSISTED ESTIMATE')}</span><small>Korea popularity</small><strong>${safe(titleCase(korea.level || 'not_enough_data'))}</strong><p>${safe(korea.explanation || 'Not enough comparable Korean-market evidence.')}</p></article>
+      <article><span class="source-type ${evidenceClass(global.evidence_type)}">${safe(global.evidence_type || 'AI-ASSISTED ESTIMATE')}</span><small>Global hype</small><strong>${safe(titleCase(global.level || 'not_enough_data'))}</strong><p>${safe(global.explanation || 'Not enough comparable global evidence.')}</p></article>
+      <article class="scan-gap"><span class="source-type estimate">AI-ASSISTED ESTIMATE</span><small>Korea–global gap</small><strong>${safe(titleCase(gap.verdict || 'NOT_ENOUGH_DATA'))}</strong><p>${safe(gap.explanation || 'The available evidence does not support a directional verdict.')}</p></article>
+    </div>
+    <div class="scan-review-grid">
+      <article><span class="source-type community">COMMUNITY SIGNAL</span><h3>People repeatedly like</h3>${listTemplate(result.people_like, 'No repeated praise pattern was strong enough to report.')}</article>
+      <article><span class="source-type community">COMMUNITY SIGNAL</span><h3>Repeated complaints</h3>${listTemplate(result.repeated_complaints, 'No repeated complaint pattern was strong enough to report.')}</article>
+    </div>
+    <div class="scan-history-grid">
+      <article><span>Formula history</span><strong>${safe(titleCase(formula.verdict || 'not_confirmed'))}</strong><p>${safe(formula.explanation || 'No dated official comparison was found.')}</p></article>
+      <article><span>Regional version</span><strong>${safe(titleCase(regional.verdict || 'not_confirmed'))}</strong><p>${safe(regional.explanation || 'No material regional difference was confirmed.')}</p></article>
+    </div>
+    <div class="scan-take">
+      <span>VÄRDA TAKE · AI-ASSISTED ESTIMATE</span>
+      <p>${safe(take.text || 'There is not enough evidence for a useful buying conclusion yet.')}</p>
+      <small>Confidence: ${safe(take.confidence || result.confidence || 'low')}. This is a provisional synthesis, not a verified editorial report.</small>
+    </div>
+    <div class="scan-bottom">
+      <div class="scan-sources"><h3>Sources used</h3>${sourceList}</div>
+      <div class="scan-limits"><h3>What remains uncertain</h3>${listTemplate(result.evidence_limits, 'No additional limitation was supplied; the report is still provisional.')}</div>
+    </div>`;
+  document.getElementById('closeQuickScan')?.addEventListener('click', () => { scanSection.hidden = true; });
+  track('Quick Scan Completed', { query: query.slice(0, 100), cached: Boolean(payload.cached), confidence: result.confidence || 'low' });
+}
+
+function renderScanError(message, query) {
+  if (!scanContent || !scanSection) return;
+  scanContent.innerHTML = `
+    <div class="scan-error">
+      <span class="evidence-label estimate">SCAN INCOMPLETE</span>
+      <h2>We could not produce an evidence-backed result.</h2>
+      <p>${safe(message)}</p>
+      <div><button type="button" id="retryScan">Try again</button><a href="#request">Prioritize a verified report</a></div>
+    </div>`;
+  document.getElementById('retryScan')?.addEventListener('click', () => startLiveScan(query));
+}
+
+async function startLiveScan(query) {
+  const cleanQuery = String(query || '').trim();
+  if (cleanQuery.length < 3 || !scanSection || !scanContent) return;
+  activeScanController?.abort();
+  activeScanController = new AbortController();
+  scanSection.hidden = false;
+  scanContent.innerHTML = loadingTemplate(cleanQuery);
+  scanSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const messages = [
+    'Searching Korean-market evidence…',
+    'Comparing global retail and community signals…',
+    'Checking formula and regional-version evidence…',
+    'Separating facts, community signals, and estimates…'
+  ];
+  let messageIndex = 0;
+  const timer = setInterval(() => {
+    const progress = document.getElementById('scanProgress');
+    if (progress) progress.textContent = messages[messageIndex++ % messages.length];
+  }, 3500);
+  track('Quick Scan Started', { query: cleanQuery.slice(0, 100) });
+  try {
+    const response = await fetch('/api/scan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: cleanQuery, market: document.getElementById('scanMarket')?.value || 'United States' }),
+      signal: activeScanController.signal
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.message || 'The live evidence scan failed.');
+    renderQuickScan(payload, cleanQuery);
+  } catch (error) {
+    if (error.name !== 'AbortError') {
+      renderScanError(error.message || 'The live evidence scan failed.', cleanQuery);
+      track('Quick Scan Failed', { query: cleanQuery.slice(0, 100) });
+    }
+  } finally {
+    clearInterval(timer);
+  }
+}
+
+function submitSearch() {
+  const input = document.getElementById('q');
+  const query = input?.value.trim() || '';
+  if (!query) return;
+  const hits = findProducts(query.toLowerCase());
+  if (hits.length) {
+    showSearchPreview();
+    return;
+  }
+  track('Search Miss', { query: query.slice(0, 100) });
+  startLiveScan(query);
+}
+
+document.getElementById('go')?.addEventListener('click', submitSearch);
+document.getElementById('q')?.addEventListener('input', showSearchPreview);
 document.getElementById('q')?.addEventListener('keydown', event => {
-  if (event.key === 'Enter') runSearch();
+  if (event.key === 'Enter') submitSearch();
 });
 document.querySelectorAll('[data-search]').forEach(button => button.addEventListener('click', () => {
   const input = document.getElementById('q');
   if (!input) return;
   input.value = button.dataset.search;
-  runSearch();
+  showSearchPreview();
   input.focus();
 }));
 
 const initialQuery = new URLSearchParams(window.location.search).get('q');
 if (initialQuery && document.getElementById('q')) {
   document.getElementById('q').value = initialQuery;
-  runSearch();
+  showSearchPreview();
 }
 
 const requestForm = document.getElementById('requestForm');
