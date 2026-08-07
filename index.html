@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Check whether a K-beauty product sold in the U.S. uses the same formula, a different market formula, or only different labeling." />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+  <link rel="canonical" href="https://kformula.vercel.app/" />
+  <title>K-Formula Check | Korean vs U.S. K-Beauty Formula Checker</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"K-Formula Check","url":"https://kformula.vercel.app/","applicationCategory":"ShoppingApplication","operatingSystem":"Any","description":"Compare Korean and U.S. market versions of K-beauty products using brand and retailer documentation."}</script>
+</head>
+<body>
+<header class="top"><a class="logo" href="/">K-FORMULA <span>CHECK</span></a><span class="tag">Independent K-beauty formula research</span></header>
+<main>
+<section class="hero">
+  <div class="eyebrow">K-BEAUTY VERSION INTELLIGENCE</div>
+  <h1>Is it really the <em>Korean formula</em>?</h1>
+  <p>Compare Korean and U.S. versions of the K-beauty products you actually shop for. We separate true reformulations from market-specific products and simple label differences.</p>
+  <div class="search"><input id="q" type="search" placeholder="Search Beauty of Joseon, Round Lab, SKIN1004…" autocomplete="off" aria-label="Search K-beauty product"/><button id="go">Check formula</button></div>
+  <div class="hero-proof"><span>Official sources first</span><span>No guessed verdicts</span><span>Last-checked dates</span></div>
+  <div id="results" class="results"></div>
+</section>
+<section class="trust-strip" aria-label="How K-Formula Check works"><article><strong>01 · FIND THE MARKET VERSION</strong><span>We separate Korea, U.S. and regional product pages.</span></article><article><strong>02 · COMPARE THE EVIDENCE</strong><span>Brand pages, active ingredients and official statements.</span></article><article><strong>03 · GIVE A CLEAR VERDICT</strong><span>Same, different, market-specific, or not confirmed.</span></article></section>
+<section class="why">
+  <div class="eyebrow">WHY IT MATTERS</div>
+  <h2>Same brand. Similar tube. Sometimes a different product.</h2>
+  <p>Regional sunscreen rules, labeling requirements and brand-specific reformulations can create products that look almost identical online. K-Formula Check keeps the conclusion simple while showing the evidence behind it.</p>
+  <div class="states">
+    <article><b class="pill different">DIFFERENT FORMULA</b><p>Official sources show materially different formulas or market-specific sunscreen actives.</p></article>
+    <article><b class="pill same">SAME FORMULA</b><p>The brand confirms the formula is identical despite different SPF or packaging language.</p></article>
+    <article><b class="pill market">MARKET-SPECIFIC PRODUCT</b><p>The U.S. item is a distinct product made for that market, not simply a relabeled Korean tube.</p></article>
+    <article><b class="pill unclear">NOT CONFIRMED</b><p>When official documentation is insufficient, we say so instead of guessing.</p></article>
+  </div>
+</section>
+<section class="popular">
+  <div class="section-head"><div><div class="eyebrow">POPULAR CHECKS</div><h2>Start with the products shoppers keep asking about.</h2></div><p>Our first test set focuses on high-interest sunscreens where Korean and U.S. versions cause the most confusion.</p></div>
+  <div id="cards" class="cards"></div>
+</section>
+<section class="method">
+  <div><div class="eyebrow">OUR STANDARD</div><h2>Evidence before aesthetics. Even on a beauty site.</h2></div>
+  <div class="method-copy"><p>We prioritize official brand pages, official market pages and authorized retailer documentation. Ingredient-order differences alone are not enough to call a formula different because labeling rules can vary by market.</p><div class="method-points"><div><b>1</b><span>Every result states what is known and what is not.</span></div><div><b>2</b><span>Every product page shows the reason for the verdict.</span></div><div><b>3</b><span>Every check carries a verification date so stale information is visible.</span></div></div><p><strong>This is shopping information, not medical advice.</strong> Always follow the directions on the exact product you own.</p></div>
+</section>
+</main>
+<footer><span>Independent K-beauty product research. No brand affiliation.</span><span>Prototype for organic-demand validation · Verified sources only</span></footer>
+<script src="/assets/app.js"></script>
+</body></html>
