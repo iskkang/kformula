@@ -3,96 +3,186 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Check whether a K-beauty product sold in the U.S. uses the same formula, a different market formula, or only different labeling." />
+  <meta name="description" content="VÄRDA checks whether viral K-beauty products are actually popular in Korea, what reviewers repeatedly say, and whether the formula or regional version changed." />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
   <link rel="canonical" href="https://kformula.vercel.app/" />
-  <title>VÄRDA | Korean vs U.S. K-Beauty Formula Checker</title>
+  <title>VÄRDA | The K-Beauty Reality Check</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="theme-color" content="#fff7f4" />
+  <meta name="theme-color" content="#f2f0e9" />
+  <meta property="og:title" content="VÄRDA | The K-Beauty Reality Check" />
+  <meta property="og:description" content="Popular abroad. But is it actually big in Korea? Check domestic signals, recurring review patterns, and formula changes before you buy." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kformula.vercel.app/" />
   <link rel="stylesheet" href="/assets/style.css" />
   <link rel="stylesheet" href="/assets/varda.css" />
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"VÄRDA","url":"https://kformula.vercel.app/","applicationCategory":"ShoppingApplication","operatingSystem":"Any","description":"Compare Korean and U.S. market versions of K-beauty products using brand and retailer documentation."}</script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"VÄRDA","url":"https://kformula.vercel.app/","description":"Evidence-labeled K-beauty product intelligence covering Korean popularity, global hype, review patterns, and formula history.","potentialAction":{"@type":"SearchAction","target":"https://kformula.vercel.app/?q={search_term_string}","query-input":"required name=search_term_string"}}
+  </script>
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<header class="top">
-  <a class="logo" href="/" aria-label="VÄRDA home"></a>
-  <nav class="top-links">
-    <a href="#popular">Popular checks</a>
-    <a href="#method">Methodology</a>
-    <span>Verified sources only</span>
-  </nav>
-</header>
-<main>
-<section class="hero">
-  <div class="hero-shell">
-    <div class="hero-copy">
-      <div class="eyebrow">K-BEAUTY VERSION INTELLIGENCE</div>
-      <h1>Is it really the <em>Korean formula</em>?</h1>
-      <p>Compare Korean and U.S. market versions of the K-beauty products people actually shop for. We separate true reformulations from market-specific products and simple labeling differences.</p>
-      <div class="search-panel">
-        <div class="search"><input id="q" type="search" placeholder="Search Beauty of Joseon, Round Lab, SKIN1004…" autocomplete="off" aria-label="Search K-beauty product"/><button id="go">Check formula</button></div>
-        <div id="results" class="results"></div>
-      </div>
-      <div class="hero-proof"><span>Official sources first</span><span>No guessed verdicts</span><span>Last-checked dates</span></div>
-    </div>
-    <aside class="hero-panel">
-      <div class="snapshot-card">
-        <div class="snapshot-head"><strong>Featured formula check</strong><span>Updated August 2026</span></div>
-        <div class="product-mini">
-          <div class="mini-visual tone-boj"><div class="mini-label">BOJ</div></div>
-          <div class="mini-copy">
-            <h3>Beauty of Joseon Relief Sun</h3>
-            <p>One of the products shoppers most often assume is the same everywhere. It is not that simple.</p>
-            <div class="mini-grid">
-              <div><span>Verdict</span><b>Market-specific U.S. products</b></div>
-              <div><span>Main clue</span><b>Official U.S. sunscreen actives</b></div>
+  <header class="top">
+    <a class="logo" href="/" aria-label="VÄRDA home"></a>
+    <nav class="top-links" aria-label="Primary navigation">
+      <a href="#checks">Reality checks</a>
+      <a href="#evidence">Evidence system</a>
+      <a href="#request">Request a product</a>
+      <button class="watchlist-trigger" id="watchlistTrigger" type="button">Saved <span id="watchCount">0</span></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero reality-hero">
+      <div class="hero-shell">
+        <div class="hero-copy">
+          <div class="eyebrow">THE K-BEAUTY REALITY CHECK</div>
+          <h1>Popular abroad.<br><em>But is it big in Korea?</em></h1>
+          <p>Search a K-beauty product before you buy. VÄRDA separates domestic popularity, global hype, recurring review patterns, and formula changes — with the evidence type shown on every claim.</p>
+
+          <div class="search-panel">
+            <label class="search-label" for="q">Search by product or brand</label>
+            <div class="search">
+              <input id="q" type="search" placeholder="Try ANUA Heartleaf 77 or Relief Sun" autocomplete="off" aria-label="Search K-beauty product" />
+              <button id="go" type="button">Run reality check</button>
             </div>
+            <div id="results" class="results" aria-live="polite"></div>
+          </div>
+
+          <div class="search-suggestions" aria-label="Popular searches">
+            <span>Popular:</span>
+            <button type="button" data-search="ANUA Heartleaf 77">ANUA Heartleaf 77</button>
+            <button type="button" data-search="Beauty of Joseon">Beauty of Joseon</button>
+            <button type="button" data-search="Round Lab">Round Lab</button>
           </div>
         </div>
+
+        <aside class="hero-dossier" aria-label="Featured VÄRDA reality check">
+          <div class="dossier-head">
+            <div><span class="live-dot"></span> FEATURED CHECK</div>
+            <span>Updated Aug 2026</span>
+          </div>
+          <a class="featured-product" href="/products/anua-heartleaf-77-toner/">
+            <div class="featured-image tone-anua" role="img" aria-label="ANUA Heartleaf 77 Soothing Toner"></div>
+            <div>
+              <span class="brandline">ANUA · TONER</span>
+              <h2>Heartleaf 77<br>Soothing Toner</h2>
+            </div>
+          </a>
+          <div class="signal-stack">
+            <div><span>Korea signal</span><strong>Established</strong></div>
+            <div><span>Global hype</span><strong>Very high</strong></div>
+            <div class="gap"><span>Korea–global gap</span><strong>GLOBAL &gt; KOREA</strong></div>
+          </div>
+          <p class="featured-take"><b>VÄRDA TAKE</b> A legitimate Korean bestseller with real domestic use — but its international visibility now appears larger than the current Korean evidence we could verify.</p>
+          <a class="text-link" href="/products/anua-heartleaf-77-toner/">Read the evidence <span>→</span></a>
+        </aside>
       </div>
-      <div class="quick-stats">
-        <article><strong>4 verdict types</strong><p>Same formula, different formula, market-specific product, or not confirmed.</p></article>
-        <article><strong>5 pilot checks</strong><p>We started with the sunscreen products shoppers keep asking about.</p></article>
+    </section>
+
+    <section class="proof-bar" aria-label="VÄRDA principles">
+      <div><strong>Not an ingredient checker</strong><span>We focus on market position and buying context.</span></div>
+      <div><strong>No anonymous AI verdicts</strong><span>Facts, community signals, and estimates stay separate.</span></div>
+      <div><strong>Uncertainty stays visible</strong><span>Missing evidence is labeled, not filled with guesses.</span></div>
+    </section>
+
+    <section class="section checks-section" id="checks">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">PILOT DATABASE</div>
+          <h2>Start with high-confusion products.</h2>
+        </div>
+        <p>The first checks prioritize products with global hype, regional sunscreen differences, or reformulation confusion. This is a deliberately small validation database.</p>
       </div>
-    </aside>
-  </div>
-</section>
-<section class="trust-strip" aria-label="How VÄRDA works">
-  <article><strong>01 · FIND THE MARKET VERSION</strong><span>We separate Korean, U.S. and regional product pages before making any call.</span></article>
-  <article><strong>02 · COMPARE THE EVIDENCE</strong><span>Brand pages, active ingredients, label format and official statements all matter.</span></article>
-  <article><strong>03 · GIVE A CLEAR VERDICT</strong><span>Same, different, market-specific, or not confirmed — with a reason you can inspect.</span></article>
-</section>
-<section class="section" id="verdicts">
-  <div class="section-head">
-    <div><div class="eyebrow">VERDICT SYSTEM</div><h2>Simple for shoppers. Strict underneath.</h2></div>
-    <p>This is not a rumor board. Each verdict is meant to be instantly understandable while still reflecting the quality of the evidence behind it.</p>
-  </div>
-  <div class="states">
-    <article><b class="pill different">Different Formula</b><p>Official sources indicate meaningful formula differences or distinct sunscreen active systems between markets.</p></article>
-    <article><b class="pill same">Same Formula</b><p>The brand explicitly confirms the formula is the same despite different SPF labeling, packaging, or market wording.</p></article>
-    <article><b class="pill market">Market-Specific Product</b><p>The U.S. or regional item is presented as its own market product, not simply a relabeled Korean-market original.</p></article>
-    <article><b class="pill unclear">Not Confirmed</b><p>When the official documentation is not strong enough, we say so instead of pretending to know.</p></article>
-  </div>
-</section>
-<section class="section popular" id="popular">
-  <div class="section-head"><div><div class="eyebrow">POPULAR CHECKS</div><h2>Start with the products shoppers keep asking about.</h2></div><p>These first checks focus on high-confusion sunscreen products where Korean and U.S. listings often look similar but do not always mean the same thing.</p></div>
-  <div id="cards" class="cards"></div>
-</section>
-<section class="section method" id="method">
-  <div class="section-head"><div><div class="eyebrow">METHODOLOGY</div><h2>Evidence before aesthetics. Even on a beauty site.</h2></div><p>The design should feel premium, but the standard stays conservative. We do not call something a reformulation just because the ingredient order looks slightly different.</p></div>
-  <div class="method-grid">
-    <div class="method-box"><p>We prioritize official brand pages, official regional market pages and authorized retailer documentation. Ingredient-order differences alone are not enough to call a formula different because labeling rules can vary by country.</p><p><strong>This is shopping information, not medical advice.</strong> Always follow the directions on the exact product you own.</p></div>
-    <div class="method-box">
-      <div class="method-points">
-        <div><b>1</b><span>Every result states what is known and what is not.</span></div>
-        <div><b>2</b><span>Every product page shows why the verdict was made.</span></div>
-        <div><b>3</b><span>Every check carries a verification date so stale information is visible.</span></div>
+      <div class="filter-row" role="group" aria-label="Filter reality checks">
+        <button class="filter active" type="button" data-filter="all">All checks</button>
+        <button class="filter" type="button" data-filter="gap">Korea vs global</button>
+        <button class="filter" type="button" data-filter="version">Formula & version</button>
+        <button class="filter" type="button" data-filter="unclear">Needs more evidence</button>
       </div>
-    </div>
-  </div>
-</section>
-</main>
-<footer><span>VÄRDA is independent K-beauty product research. No brand affiliation.</span><span>Prototype for organic-demand validation · Verified sources only</span></footer>
-<script src="/assets/app.js"></script>
+      <div id="cards" class="cards reality-cards"></div>
+    </section>
+
+    <section class="section evidence-section" id="evidence">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">EVIDENCE SYSTEM</div>
+          <h2>Every sentence has a job.</h2>
+        </div>
+        <p>A polished summary is useless if the reader cannot tell whether it came from an official page, a review pattern, or VÄRDA's interpretation.</p>
+      </div>
+      <div class="evidence-grid">
+        <article class="evidence-card fact">
+          <span class="evidence-label">VERIFIED FACT</span>
+          <h3>Directly documented</h3>
+          <p>Official brand pages, regional product listings, regulator information, and dated retailer data.</p>
+        </article>
+        <article class="evidence-card community">
+          <span class="evidence-label">COMMUNITY SIGNAL</span>
+          <h3>Repeated user pattern</h3>
+          <p>Review themes with the platform, visible sample size, and collection limitations attached.</p>
+        </article>
+        <article class="evidence-card estimate">
+          <span class="evidence-label">AI-ASSISTED ESTIMATE</span>
+          <h3>Reasoned, not proven</h3>
+          <p>VÄRDA's synthesis of multiple signals. Confidence and missing evidence are always stated.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section request-section" id="request">
+      <div class="request-shell">
+        <div>
+          <div class="eyebrow">BUILD THE DATABASE WITH DEMAND</div>
+          <h2>Can't find your product?</h2>
+          <p>Submit the exact product name. No account and no conversation required. Requests are used only to decide which public reality check we research next.</p>
+        </div>
+        <form id="requestForm" class="request-form">
+          <label for="requestProduct">Product or product URL</label>
+          <input id="requestProduct" name="product" required maxlength="160" placeholder="e.g. TIRTIR Milk Skin Toner" />
+          <div class="request-row">
+            <div>
+              <label for="requestMarket">Your market</label>
+              <select id="requestMarket" name="market">
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="European Union">European Union</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <button type="submit">Request research</button>
+          </div>
+          <p id="requestStatus" class="request-status" aria-live="polite">We do not collect your email at this stage.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section method-section" id="method">
+      <div class="method-intro">
+        <div class="eyebrow">HOW A CHECK IS BUILT</div>
+        <h2>Sources first. Summary last.</h2>
+      </div>
+      <div class="method-steps">
+        <article><span>01</span><h3>Match the exact product</h3><p>Brand, size, market, packaging, and version are separated before comparison.</p></article>
+        <article><span>02</span><h3>Collect comparable signals</h3><p>Korean and global retailer evidence, review patterns, and official formula records.</p></article>
+        <article><span>03</span><h3>State the gap</h3><p>VÄRDA publishes what the evidence supports, what it suggests, and what remains unknown.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <aside class="watch-drawer" id="watchDrawer" aria-hidden="true" aria-label="Saved products">
+    <div class="drawer-head"><h2>Saved on this device</h2><button id="closeWatchlist" type="button" aria-label="Close saved products">×</button></div>
+    <p>Use this list to return to products you are monitoring. Email alerts are not enabled in this pilot.</p>
+    <div id="watchItems" class="watch-items"></div>
+  </aside>
+  <div class="drawer-scrim" id="drawerScrim" hidden></div>
+
+  <footer>
+    <div><span class="footer-logo">VÄRDA</span><p>Independent K-beauty product intelligence for better buying decisions.</p></div>
+    <div><p>Not medical advice. No brand affiliation.</p><p>Evidence checked August 2026 · Pilot database</p></div>
+  </footer>
+  <script src="/assets/app.js"></script>
 </body>
 </html>
