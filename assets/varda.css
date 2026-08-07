@@ -3,6 +3,12 @@
 .logo-mark,.logo-text{display:none!important}
 .logo::after{content:"VÄRDA";font-family:"Instrument Serif",serif;font-size:34px;font-weight:400;letter-spacing:.055em;color:var(--ink);line-height:.9}
 
+.featured-image.tone-anua,.card-image.tone-anua,.result-thumb.tone-anua,.watch-thumb.tone-anua,.product-bottle.tone-anua{
+  background-color:#eef2e7!important;
+  background-image:url("https://anua.com/cdn/shop/files/anua-us-toner-heartleaf-77-soothing-toner-1239193744.jpg?v=1779181932&width=2000")!important;
+  background-repeat:no-repeat!important;background-position:center!important;background-size:contain!important
+}
+
 .mini-visual.tone-boj,.card-visual.tone-boj,.product-bottle.tone-boj{
   background-color:#fff2ee!important;
   background-image:url("https://jp.beautyofjoseon.com/cdn/shop/files/Untitled_design_-_2025-06-17T142033.318.png?v=1750140933&width=1800")!important;
